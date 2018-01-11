@@ -1,0 +1,45 @@
+
+
+echo "Check current working directory"
+pwd
+
+echo "List directory contents"
+ls
+
+echo "Make new directory and cd into it"
+mkdir shoppinglist
+cd shoppinglist
+
+echo "Cretae project folder and cd into it"
+read name
+if [ "$name" ]; then
+mkdir $name
+cd $name
+
+echo "Clone the repository"
+git clone https://github.com/CeciliaCaroline/shoppinglist_api.git
+
+echo "Create the virtual environment and activate it"
+virtualenv --python=python3 venv
+source venv/bin/activate
+
+echo "cd into new cloned repository"
+cd shoppinglist_api
+
+echo "Install required dependencies"
+pip install -r requirements.txt
+
+echo "Create the database and run migrations"
+python manage.py db init
+python manage.py db migrate
+python manage.py db upgrade
+
+echo "Run server"
+python run.py
+
+else
+    echo "No directory name has been provided"
+fi
+
+
+
